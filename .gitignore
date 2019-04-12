@@ -1,0 +1,6 @@
+*.pyc
+build
+dist
+opcgenerator.egg-info
+.env
+.vscode

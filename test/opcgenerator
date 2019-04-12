@@ -1,0 +1,7 @@
+#!/bin/bash
+
+# OP key provided by CARRIER
+OP=$(uuidgen -x | sed 's/-//g' | tr '[:lower:]' '[:upper:]')
+
+# Autogenerate K (secret key or Ki) from uuidgen and print triplet KI OP OPC
+opcgenerator -o $OP -k $(uuidgen -x | sed 's/-//g' | tr '[:lower:]' '[:upper:]')
