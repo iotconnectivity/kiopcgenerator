@@ -30,7 +30,7 @@ setup(
         'card==0.3'
     ],
     dependency_links=[
-    'git+https://git@github.com/PodgroupConnectivity/card.git@4cafa061b82b0cc2872fe040688d59ecde3750d0#egg=card-0.3'
+    'git+https://github.com/PodgroupConnectivity/card#egg=card'
     ],
     packages=['kiopcgenerator'],
     scripts = ["kiopcgen"]
