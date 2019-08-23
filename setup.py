@@ -27,7 +27,7 @@ setup(
     license="GPLv3",
     install_requires=[
         'pycrypto',
-        'card==0.3'
+        'card'
     ],
     dependency_links=[
     'git+https://github.com/PodgroupConnectivity/card#egg=card'
