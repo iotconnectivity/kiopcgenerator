@@ -1,0 +1,31 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+# vim: ts=4
+###
+#
+# Copyright (c) 2019 Podsystem Ltd
+# Authors : J. Félix Ontañón <felix.ontanon@podgroup.com>
+
+import sys
+
+import pprint
+from optparse import OptionParser
+
+import kiopcgenerator
+
+parser = OptionParser()
+parser.add_option("-o", "--op", dest="op", help="32 char OP key")
+parser.add_option("-t", "--transport", dest="trans", help="32 char Transport key")
+parser.add_option("-k", "--ki", dest="ki", help="Optional 32 char Ki key (to avoid random generation)")
+(options, args) = parser.parse_args()
+
+if options.op and options.trans:
+    if not options.ki:
+        options.ki = gen_ki()
+
+    result = kiopcgenerator.gen_opc_eki(options.op, options.trans, options.ki)
+    pprint.pprint(result)
+
+    sys.exit(0)
+else:
+    sys.exit(1)

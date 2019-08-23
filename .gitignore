@@ -1,6 +1,6 @@
 *.pyc
 build
 dist
-opcgenerator.egg-info
+kiopcgenerator.egg-info
 .env
 .vscode

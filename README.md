@@ -1,8 +1,9 @@
-# OPc Generator
+# Ki/OPc Generator
 
-OPc USIM card keys geneartion. This script will produce the OPc given the Op and Ki. 
+Ki/OPc USIM card keys geneartion. This script will produce Ki/eKi/OPc triplets given the Op and Transport keys.
 
-OPc was the ultimate key that is generated from OP and Ki (secret Key). Generate your Ki secret keys and grab the OP from your carrier operator. 
+OPc was the ultimate key that is generated from OP and Ki (secret Key). 
+Generate your Ki secret keys and grab the OP and Transport keys from your carrier.
 
 ## Table of Contents
 
@@ -28,20 +29,47 @@ When authentication credentials are to be used in Authentication Generation then
 
 ## Usage
 
-Use from the command line with the **opgenereator** tool:
+Use from the command line with the **kiopcgen** tool:
 
 ```
-$ Usage: opcgenerator [options]
+Usage: kiopcgen [options]
 
 Options:
-  -h, --help         show this help message and exit
-  -k KEY, --key=KEY  K from USIM
-  -o OP, --op=OP     OP operator key
+  -h, --help                  show this help message and exit
+  -o OP, --op=OP              32 char OP key
+  -t TRANS, --transport=TRANS 32 char Transport key
+  -k KI, --ki=KI              Optional 32 char Ki key (to avoid random generation)
 
-$ opcgenerator -k D7DECB1F50404CC29ECBF989FE73AFC5 -o 2257CC6E9746434B89F346F0276CCAEC
-OP: 	2257CC6E9746434B89F346F0276CCAEC
-KI: 	D7DECB1F50404CC29ECBF989FE73AFC5
-OPc:	5A27120D3C6E32D7053A6B0086F2E312
+$ kiopcgen  -o D7DECB1F50404CC29ECBF989FE73AFC5 -t 2257CC6E9746434B89F346F0276CCAEC
+{'KI': '780E6AC95A2E43449C15BDCDD0450982',
+ 'OPC': '2274B84B8043105A28AABBE53EF1D014',
+ 'eKI': '4601138387FCF7D666ED24BBB3EE37B8'}
+
+$ kiopcgen -o D7DECB1F50404CC29ECBF989FE73AFC5 -t 2257CC6E9746434B89F346F0276CCAEC -k 8978B79E7C104F678FA5C336509DB188
+{'KI': '8978B79E7C104F678FA5C336509DB188',
+ 'OPC': '6F2E82855DEE7C893CB1F7A72FD08B57',
+ 'eKI': 'FBE8C170F6A5C6C257E5324719674818'}
+```
+
+Or import the kiopcgenerator module to use in your scripts
+
+```python
+import pprint
+import uuid
+import kiopcgenerator
+ 
+op = "D7DECB1F50404CC29ECBF989FE73AFC5"
+transport = "2257CC6E9746434B89F346F0276CCAEC"
+ki = kiopcgenerator.gen_ki() # Generates random ki
+
+print ki
+# EBD77DF6CFF949448ACF82B8FE4E59E3
+print kiopcgenerator.gen_opc(op, ki)
+# 33244F04A86408A53110D1FCAFD04288
+print kiopcgenerator.gen_eki(transport, ki)
+# 8FAC9FE22D306EA4CB86279B3473D8CB
+print kiopcgenerator.gen_opc_eki(op, transport, ki)
+# {'KI': 'EBD77DF6CFF949448ACF82B8FE4E59E3', 'eKI': '8FAC9FE22D306EA4CB86279B3473D8CB', 'OPC': '33244F04A86408A53110D1FCAFD04288'}
 ```
 
 ## Installation
@@ -49,18 +77,18 @@ OPc:	5A27120D3C6E32D7053A6B0086F2E312
 From PyPI repository
 
 ```
-$ sudo pip install opcgenerator
+$ sudo pip install kiopcgenerator
 ```
 
 From source code
 
 ```
-~/opcgenerator$ sudo python setup.py install
+sudo python setup.py install
 ```
 
 ## Support
 
-Please [open an issue](https://github.com/PodgroupConnectivity/opcgenerator/issues/new) for support.
+Please [open an issue](https://github.com/PodgroupConnectivity/kiopcgenerator/issues/new) for support.
 
 ## Contributing
 
