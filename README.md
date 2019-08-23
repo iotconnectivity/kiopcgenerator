@@ -74,16 +74,16 @@ print kiopcgenerator.gen_opc_eki(op, transport, ki)
 
 ## Installation
 
-From PyPI repository
+Using PyPI repository
 
 ```
-$ sudo pip install kiopcgenerator
+$ pip install git+https://github.com/PodgroupConnectivity/kiopcgenerator#egg=kiopcgenerator
 ```
 
 From source code
 
 ```
-sudo python setup.py install
+$ python setup.py install
 ```
 
 ## Support

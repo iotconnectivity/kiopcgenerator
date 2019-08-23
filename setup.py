@@ -9,10 +9,10 @@
 from setuptools import setup
 
 setup(
-    name="opcgenerator",
+    name="kiopcgenerator",
     author="J. Félix Ontañón",
     author_email="felix.ontanon@podgroup.com",
-    url="https://github.com/PodgroupConnectivity/opcgenerator",
+    url="https://github.com/PodgroupConnectivity/kiopcgenerator",
     description="OPc USIM card keys geneartion. This script will produce Ki/eKi/OPc triplets given the Op and Transport keys.",
     long_description=open("README.md", "r").read(),
     classifiers=[
