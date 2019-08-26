@@ -5,6 +5,8 @@ Ki/OPc USIM card keys geneartion. This script will produce Ki/eKi/OPc triplets g
 OPc was the ultimate key that is generated from OP and Ki (secret Key). 
 Generate your Ki secret keys and grab the OP and Transport keys from your carrier.
 
+**NOTE**: This package requires Python3. Something is still wrong on setup.py so the dependency card-0.3 is not installed properly. Have a look at the [Installation](#installation) section for more details
+
 ## Table of Contents
 
 - [Description](#description)
@@ -62,13 +64,13 @@ op = "D7DECB1F50404CC29ECBF989FE73AFC5"
 transport = "2257CC6E9746434B89F346F0276CCAEC"
 ki = kiopcgenerator.gen_ki() # Generates random ki
 
-print ki
+print (ki)
 # EBD77DF6CFF949448ACF82B8FE4E59E3
-print kiopcgenerator.gen_opc(op, ki)
+print (kiopcgenerator.gen_opc(op, ki))
 # 33244F04A86408A53110D1FCAFD04288
-print kiopcgenerator.gen_eki(transport, ki)
+print (kiopcgenerator.gen_eki(transport, ki))
 # 8FAC9FE22D306EA4CB86279B3473D8CB
-print kiopcgenerator.gen_opc_eki(op, transport, ki)
+print (kiopcgenerator.gen_opc_eki(op, transport, ki))
 # {'KI': 'EBD77DF6CFF949448ACF82B8FE4E59E3', 'eKI': '8FAC9FE22D306EA4CB86279B3473D8CB', 'OPC': '33244F04A86408A53110D1FCAFD04288'}
 ```
 
@@ -77,14 +79,18 @@ print kiopcgenerator.gen_opc_eki(op, transport, ki)
 Using PyPI repository
 
 ```
-$ pip install git+https://github.com/PodgroupConnectivity/kiopcgenerator#egg=kiopcgenerator
+$ pip3 install git+https://github.com/PodgroupConnectivity/card.git@b8eb2c70eaad754a631a9fcbd1ce0dba4b58a662#egg=card-0.3.1
+$ pip3 install git+https://github.com/PodgroupConnectivity/kiopcgenerator#egg=kiopcgenerator
 ```
 
 From source code
 
 ```
-$ python setup.py install
+$ pip3 install git+https://github.com/PodgroupConnectivity/card.git@b8eb2c70eaad754a631a9fcbd1ce0dba4b58a662#egg=card-0.3.1
+$ pip3 install .
 ```
+
+**NOTE**: This package requires Python3. Something is still wrong on setup.py so the dependency card-0.3 is not installed properly.
 
 ## Support
 
