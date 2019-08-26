@@ -37,8 +37,8 @@ class AuChss():
         else:
             OP = binascii.unhexlify(self.OP)
         if self._debug:
-            print ("[DBG]calc_opc_hex: op(%d) KI(%d) IV(%d)" % (len(OP), len(KI), len(IV)))
-            print ("[DBG]calc_opc_hex: OP", OP, "KI", KI, "IV", IV)
+            print "[DBG]calc_opc_hex: op(%d) KI(%d) IV(%d)" % (len(OP), len(KI), len(IV))
+            print "[DBG]calc_opc_hex: OP", OP, "KI", KI, "IV", IV
 
         aesCrypt = AES.new(KI, mode=AES.MODE_CBC, IV=IV)
         data = OP
@@ -62,3 +62,25 @@ def aes_128_cbc_encrypt(key, text):
     ciphertext = encryptor.encrypt(textb)
 
     return binascii.hexlify(ciphertext).upper()
+
+def gen_ki():
+    '''
+    Clear ki random generator
+    '''
+    return str(uuid.uuid4()).replace('-','').upper()
+
+def gen_opc(op, ki):
+    '''
+    generates opc based on op and ki
+    '''    
+    hss = AuChss()
+    return hss.calc_opc_hex(ki, op).upper()
+
+def gen_eki(transport, ki):
+    '''
+    generates eKI based on ki and transport key
+    '''
+    return aes_128_cbc_encrypt(transport, ki)
+
+def gen_opc_eki(op, transport, ki):
+    return {"KI": ki, "OPC": gen_opc(op, ki), "eKI": gen_eki(transport, ki)}

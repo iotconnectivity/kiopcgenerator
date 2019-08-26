@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/python
 # -*- coding: utf-8 -*-
 # vim: ts=4
 ###
@@ -21,7 +21,7 @@ parser.add_option("-k", "--ki", dest="ki", help="Optional 32 char Ki key (to avo
 
 if options.op and options.trans:
     if not options.ki:
-        options.ki = gen_ki()
+        options.ki = kiopcgenerator.gen_ki()
 
     result = kiopcgenerator.gen_opc_eki(options.op, options.trans, options.ki)
     pprint.pprint(result)

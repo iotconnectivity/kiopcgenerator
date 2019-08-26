@@ -16,14 +16,14 @@ setup(
     description="OPc USIM card keys geneartion. This script will produce Ki/eKi/OPc triplets given the Op and Transport keys.",
     long_description=open("README.md", "r").read(),
     classifiers=[
-        'Development Status :: 0.1.1 - Beta',
+        'Development Status :: 0.1.2 - Beta',
         'License :: OSI Approved :: GNU General Public License (GPL)',
         'Operating System :: POSIX',
         'Programming Language :: Python',
         'Topic :: Utilities'
     ],
     keywords = ['python', 'sim', 'simcard', 'telecoms'],
-    version="0.1.1",
+    version="0.1.2",
     license="GPLv3",
     setup_requies=['wheel'],
     install_requires=[

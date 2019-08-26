@@ -5,7 +5,7 @@ Ki/OPc USIM card keys geneartion. This script will produce Ki/eKi/OPc triplets g
 OPc was the ultimate key that is generated from OP and Ki (secret Key). 
 Generate your Ki secret keys and grab the OP and Transport keys from your carrier.
 
-**NOTE**: This package requires Python3. Something is still wrong on setup.py so the dependency card-0.3 is not installed properly. Have a look at the [Installation](#installation) section for more details
+**NOTE**: This package has only been tested with Python2.7
 
 ## Table of Contents
 
@@ -13,6 +13,7 @@ Generate your Ki secret keys and grab the OP and Transport keys from your carrie
 - [Usage](#usage)
 - [Installation](#installation)
 - [Support](#support)
+- [ToDo](#todo)
 - [Contributing](#contributing)
 
 ## Description
@@ -79,22 +80,22 @@ print (kiopcgenerator.gen_opc_eki(op, transport, ki))
 Using PyPI repository
 
 ```
-$ pip3 install git+https://github.com/PodgroupConnectivity/card.git@b8eb2c70eaad754a631a9fcbd1ce0dba4b58a662#egg=card-0.3.1
-$ pip3 install git+https://github.com/PodgroupConnectivity/kiopcgenerator#egg=kiopcgenerator
+$ pip install git+https://github.com/PodgroupConnectivity/kiopcgenerator#egg=kiopcgenerator
 ```
 
 From source code
 
 ```
-$ pip3 install git+https://github.com/PodgroupConnectivity/card.git@b8eb2c70eaad754a631a9fcbd1ce0dba4b58a662#egg=card-0.3.1
-$ pip3 install .
+$ python setup.py install
 ```
-
-**NOTE**: This package requires Python3. Something is still wrong on setup.py so the dependency card-0.3 is not installed properly.
 
 ## Support
 
 Please [open an issue](https://github.com/PodgroupConnectivity/kiopcgenerator/issues/new) for support.
+
+## ToDo
+
+* Porting to python3
 
 ## Contributing
 
