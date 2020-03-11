@@ -74,8 +74,7 @@ def gen_ki():
     """
     Clear ki random generator
     """
-    # return str(uuid.uuid4()).replace('-','').upper()
-    return "EBD77DF6CFF949448ACF82B8FE4E59E3"
+    return str(uuid.uuid4()).replace('-','').upper()
 
 
 def gen_opc(op, ki):
