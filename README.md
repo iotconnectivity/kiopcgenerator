@@ -95,7 +95,7 @@ Please [open an issue](https://github.com/PodgroupConnectivity/kiopcgenerator/is
 
 ## ToDo
 
-* Porting to python3
+* Porting to python3 and Upper version. Check python3 branch.
 
 ## Contributing
 
