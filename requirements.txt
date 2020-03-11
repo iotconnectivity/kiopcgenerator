@@ -1,0 +1,3 @@
+card==0.0.1
+pycrypto==2.6.1
+pyscard==1.9.9
