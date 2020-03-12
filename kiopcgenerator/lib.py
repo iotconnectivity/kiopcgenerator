@@ -72,6 +72,7 @@ def aes_128_cbc_encrypt(key, text):
 
 def gen_ki():
     """
+    Ki: Subscriber Authentication Key (128 bit)
     Clear ki random generator
     """
     return str(uuid.uuid4()).replace('-','').upper()
@@ -79,6 +80,9 @@ def gen_ki():
 
 def gen_opc(op, ki):
     """
+    Ki: Subscriber Authentication Key (128 bit)
+    OP: Operator Code - same for all SIMs from a single operator
+    OPc: ​Derived operator code unique for each SIM
     generates opc based on op and ki
     """
     hss = AuChss()
