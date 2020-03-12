@@ -5,7 +5,7 @@ Ki/OPc USIM card keys geneartion. This script will produce Ki/eKi/OPc triplets g
 OPc was the ultimate key that is generated from OP and Ki (secret Key). 
 Generate your Ki secret keys and grab the OP and Transport keys from your carrier.
 
-**NOTE**: This package has only been tested with Python2.7
+**NOTE**: This package has been tested with Python3.8
 
 ## Table of Contents
 
