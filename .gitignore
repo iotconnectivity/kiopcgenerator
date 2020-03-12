@@ -4,3 +4,4 @@ dist
 kiopcgenerator.egg-info
 .env
 .vscode
+.eggs
