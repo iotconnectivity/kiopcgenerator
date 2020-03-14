@@ -5,6 +5,7 @@
 #
 # Copyright (c) 2019 Podsystem Ltd
 # Authors : J. Félix Ontañón <felix.ontanon@podgroup.com>
+# Modify for python3: Mahfuzur Rahman Khan <mahfuzku11@gmail.com>
 
 """
 OPc and eKi generator for python3 and upper version.
@@ -13,8 +14,6 @@ More info: https://diameter-protocol.blogspot.com/2013/06/usage-of-opopc-and-tra
 import uuid
 import binascii
 from Crypto.Cipher import AES
-
-from card.utils import stringToByte, byteToString
 
 
 # Based on OSMO-SIM-AUTH library: https://osmocom.org/projects/osmo-sim-auth
@@ -25,8 +24,8 @@ class AuChss():
     _debug = 0
 
     def __init__(self, OP_hex="00000000000000000000000000000000", debug=0):
-        self.OP_bin = stringToByte(OP_hex)  # Operator Key
-        self.OP = byteToString(self.OP_bin)
+        self.OP_bin = list(bytearray(OP_hex.encode()))  # Operator Key, converts a string into a list of bytes
+        self.OP = ''.join(chr(a) for a in self.OP_bin)  # converts a list of bytes into a string
         self.users = []
 
     def calc_opc_hex(self, K_hex, OP_hex=None):
@@ -57,6 +56,7 @@ class AuChss():
 
 # Using 16bit zeroes as IV for the AES algo
 IV = binascii.unhexlify('00000000000000000000000000000000')
+
 
 
 def aes_128_cbc_encrypt(key, text):

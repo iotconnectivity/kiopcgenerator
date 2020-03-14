@@ -5,7 +5,7 @@ Ki/OPc USIM card keys geneartion. This script will produce Ki/eKi/OPc triplets g
 OPc was the ultimate key that is generated from OP and Ki (secret Key). 
 Generate your Ki secret keys and grab the OP and Transport keys from your carrier.
 
-**NOTE**: This package has been tested with Python3.8
+**NOTE**: This package has been tested with Python3.6.9 and Python3.8
 
 ## Table of Contents
 
@@ -13,7 +13,6 @@ Generate your Ki secret keys and grab the OP and Transport keys from your carrie
 - [Usage](#usage)
 - [Installation](#installation)
 - [Support](#support)
-- [ToDo](#todo)
 - [Contributing](#contributing)
 
 ## Description
@@ -77,6 +76,25 @@ print (kiopcgenerator.gen_opc_eki(op, transport, ki))
 
 ## Installation
 
+Before install this you need to setup below dependency:
+
+```
+For Python 3.x
+$ sudo apt-get install python3-dev
+
+For Python 3.4
+$ sudo apt-get install python3.4-dev
+
+For Python 3.6.x
+$ sudo apt-get install python3.6-dev
+
+For Python 3.7
+$ sudo apt-get install python3.7-dev
+
+For Python 3.8
+$ sudo apt-get install python3.8-dev
+```
+
 Using PyPI repository
 
 ```
@@ -92,10 +110,6 @@ $ python setup.py install
 ## Support
 
 Please [open an issue](https://github.com/PodgroupConnectivity/kiopcgenerator/issues/new) for support.
-
-## ToDo
-
-* Porting to python3 and Upper version. Check python3 branch.
 
 ## Contributing
 
