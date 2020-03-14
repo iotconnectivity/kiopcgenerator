@@ -5,6 +5,7 @@
 #
 # Copyright (c) 2019 Pod Group Ltd
 # Authors : J. Félix Ontañón <felix.ontanon@podgroup.com>
+# Modify for python3: Mahfuzur Rahman Khan <mahfuzku11@gmail.com>
 
 from setuptools import setup
 
@@ -27,10 +28,7 @@ setup(
     license="GPLv3",
     setup_requies=['wheel'],
     install_requires=[
-        'pycrypto',
-        # I cannot undertstand how such a specific dependency like the following
-        # installing card-0.0.1 instead of card-0.3.1. I'm afraid you'll have to manually install this 
-        'card @ git+https://github.com/PodgroupConnectivity/card.git@b8eb2c70eaad754a631a9fcbd1ce0dba4b58a662#egg=card-0.3.1'
+        'pycrypto'
     ],
     packages=['kiopcgenerator'],
     scripts = ["kiopcgen"]
