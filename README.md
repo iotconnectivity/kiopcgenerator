@@ -107,6 +107,11 @@ From source code
 $ python setup.py install
 ```
 
+NOTE: You may want to install the dependencies in advance, if you haven't yet.
+```
+$ pip install -r requirements.txt
+```
+
 ## Support
 
 Please [open an issue](https://github.com/PodgroupConnectivity/kiopcgenerator/issues/new) for support.
