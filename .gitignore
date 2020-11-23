@@ -273,4 +273,5 @@ kiopcgenerator.egg-info
 .idea/
 /kiopcgenerator/.idea/
 .idea/kiopcgenerator.iml
+.idea
 
