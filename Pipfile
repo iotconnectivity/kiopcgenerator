@@ -4,12 +4,10 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-pyscard = "*"
-pycrypto = "*"
+uuid = "*"
+pycryptodome = "*"
 
 [dev-packages]
 
 [requires]
 python_version = "3.8"
-
-
