@@ -14,7 +14,8 @@ import uuid
 import binascii
 from Crypto.Cipher import AES
 
-from card.utils import stringToByte, byteToString
+
+# from card.utils import stringToByte, byteToString - Removed from package as not needed.
 
 
 # Based on OSMO-SIM-AUTH library: https://osmocom.org/projects/osmo-sim-auth
@@ -25,12 +26,12 @@ class AuChss():
     _debug = 0
 
     def __init__(self, OP_hex="00000000000000000000000000000000", debug=0):
-        self.OP_bin = stringToByte(OP_hex)  # Operator Key
-        self.OP = byteToString(self.OP_bin)
+        self.OP_bin = bytes(OP_hex, 'utf-8')  # Operator Key
+        self.OP = self.OP_bin.decode('utf-8')
         self.users = []
 
     def calc_opc_hex(self, K_hex, OP_hex=None):
-        IV = 16 * '\x00'
+        IV = binascii.unhexlify(16 * '00')
         KI = binascii.unhexlify(K_hex)
 
         if not OP_hex == None:
@@ -48,7 +49,7 @@ class AuChss():
 
     def _xor_str(self, s, t):
         """xor two strings together"""
-        return "".join(chr(ord(a) ^ ord(b)) for a, b in zip(s, t))
+        return bytes([_a ^ _b for _a, _b in zip(s, t)])
 
 
 # Using 16bit zeroes as IV for the AES algo
