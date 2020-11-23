@@ -21,7 +21,8 @@ from Crypto.Cipher import AES
 # Based on OSMO-SIM-AUTH library: https://osmocom.org/projects/osmo-sim-auth
 class AuChss:
     """
-    implements a simple AuC / HSS with no persistant storage
+    implements a simple AuC / HSS with no persistent storage
+    set _debug = 1 to print out internal debug
     """
     _debug = 0
 
