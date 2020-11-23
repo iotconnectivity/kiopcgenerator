@@ -16,15 +16,16 @@ from Crypto.Cipher import AES
 
 from card.utils import stringToByte, byteToString
 
+
 # Based on OSMO-SIM-AUTH library: https://osmocom.org/projects/osmo-sim-auth
 class AuChss():
-    '''
+    """
     implements a simple AuC / HSS with no persistant storage
-    '''
+    """
     _debug = 0
 
     def __init__(self, OP_hex="00000000000000000000000000000000", debug=0):
-        self.OP_bin = stringToByte(OP_hex) # Operator Key
+        self.OP_bin = stringToByte(OP_hex)  # Operator Key
         self.OP = byteToString(self.OP_bin)
         self.users = []
 
@@ -33,29 +34,31 @@ class AuChss():
         KI = binascii.unhexlify(K_hex)
 
         if not OP_hex == None:
-           OP = binascii.unhexlify(OP_hex)
+            OP = binascii.unhexlify(OP_hex)
         else:
             OP = binascii.unhexlify(self.OP)
         if self._debug:
-            print "[DBG]calc_opc_hex: op(%d) KI(%d) IV(%d)" % (len(OP), len(KI), len(IV))
-            print "[DBG]calc_opc_hex: OP", OP, "KI", KI, "IV", IV
+            print(f"[DBG]calc_opc_hex: op({len(OP)}) KI({len(KI)}) IV({len(IV)})")
+            print(f"[DBG]calc_opc_hex: OP, {OP} KI, {KI} IV, {IV}")
 
         aesCrypt = AES.new(KI, mode=AES.MODE_CBC, IV=IV)
         data = OP
-        OPc =  self._xor_str(data, aesCrypt.encrypt(data))
+        OPc = self._xor_str(data, aesCrypt.encrypt(data))
         return binascii.hexlify(OPc)
 
-    def _xor_str(self,s,t):
+    def _xor_str(self, s, t):
         """xor two strings together"""
-        return "".join(chr(ord(a)^ord(b)) for a,b in zip(s,t))
+        return "".join(chr(ord(a) ^ ord(b)) for a, b in zip(s, t))
+
 
 # Using 16bit zeroes as IV for the AES algo
 IV = binascii.unhexlify('00000000000000000000000000000000')
 
+
 def aes_128_cbc_encrypt(key, text):
-    '''
+    """
     implements aes 128b encryption with cbc.
-    '''
+    """
     keyb = binascii.unhexlify(key)
     textb = binascii.unhexlify(text)
     encryptor = AES.new(keyb, AES.MODE_CBC, IV=IV)
@@ -63,24 +66,28 @@ def aes_128_cbc_encrypt(key, text):
 
     return binascii.hexlify(ciphertext).upper()
 
+
 def gen_ki():
-    '''
+    """
     Clear ki random generator
-    '''
-    return str(uuid.uuid4()).replace('-','').upper()
+    """
+    return str(uuid.uuid4()).replace('-', '').upper()
+
 
 def gen_opc(op, ki):
-    '''
+    """
     generates opc based on op and ki
-    '''    
+    """
     hss = AuChss()
     return hss.calc_opc_hex(ki, op).upper()
 
+
 def gen_eki(transport, ki):
-    '''
+    """
     generates eKI based on ki and transport key
-    '''
+    """
     return aes_128_cbc_encrypt(transport, ki)
+
 
 def gen_opc_eki(op, transport, ki):
     return {"KI": ki, "OPC": gen_opc(op, ki), "eKI": gen_eki(transport, ki)}
