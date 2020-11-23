@@ -22,9 +22,9 @@ setup(
         'Programming Language :: Python',
         'Topic :: Utilities'
     ],
-    keywords = ['python', 'sim', 'simcard', 'telecoms'],
+    keywords=['python', 'sim', 'simcard', 'telecoms'],
     version="0.1.4",
     license="GPLv3",
     packages=['kiopcgenerator'],
-    scripts = ["kiopcgen"]
+    scripts=["kiopcgen"]
 )
