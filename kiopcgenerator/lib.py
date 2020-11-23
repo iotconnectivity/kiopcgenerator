@@ -19,33 +19,33 @@ from Crypto.Cipher import AES
 
 
 # Based on OSMO-SIM-AUTH library: https://osmocom.org/projects/osmo-sim-auth
-class AuChss():
+class AuChss:
     """
     implements a simple AuC / HSS with no persistant storage
     """
     _debug = 0
 
-    def __init__(self, OP_hex="00000000000000000000000000000000", debug=0):
-        self.OP_bin = bytes(OP_hex, 'utf-8')  # Operator Key
-        self.OP = self.OP_bin.decode('utf-8')
+    def __init__(self, op_hex="00000000000000000000000000000000", debug=0):
+        self.op_bin = bytes(op_hex, 'utf-8')  # Operator Key
+        self.op = self.op_bin.decode('utf-8')
         self.users = []
 
-    def calc_opc_hex(self, K_hex, OP_hex=None):
-        IV = binascii.unhexlify(16 * '00')
-        KI = binascii.unhexlify(K_hex)
+    def calc_opc_hex(self, k_hex, op_hex=None):
+        iv = binascii.unhexlify(16 * '00')
+        ki = binascii.unhexlify(k_hex)
 
-        if not OP_hex == None:
-            OP = binascii.unhexlify(OP_hex)
+        if not op_hex == None:
+            op = binascii.unhexlify(op_hex)
         else:
-            OP = binascii.unhexlify(self.OP)
+            op = binascii.unhexlify(self.op)
         if self._debug:
-            print(f"[DBG]calc_opc_hex: op({len(OP)}) KI({len(KI)}) IV({len(IV)})")
-            print(f"[DBG]calc_opc_hex: OP, {OP} KI, {KI} IV, {IV}")
+            print(f'[DBG]calc_opc_hex: op({len(op)}) KI({len(ki)}) IV({len(iv)})')
+            print(f'[DBG]calc_opc_hex: OP, {op} KI, {ki} IV, {iv}')
 
-        aesCrypt = AES.new(KI, mode=AES.MODE_CBC, IV=IV)
-        data = OP
-        OPc = self._xor_str(data, aesCrypt.encrypt(data))
-        return binascii.hexlify(OPc)
+        aes_crypt = AES.new(ki, mode=AES.MODE_CBC, IV=iv)
+        data = op
+        o_pc = self._xor_str(data, aes_crypt.encrypt(data))
+        return binascii.hexlify(o_pc)
 
     def _xor_str(self, s, t):
         """xor two strings together"""
