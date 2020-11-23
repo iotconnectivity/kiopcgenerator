@@ -272,4 +272,5 @@ kiopcgenerator.egg-info
 /.idea/workspace.xml
 /.idea/
 /kiopcgenerator/.idea/
+/.idea/kiopcgenerator.iml
 
