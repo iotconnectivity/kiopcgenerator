@@ -270,7 +270,7 @@ kiopcgenerator.egg-info
 .vscode
 .eggs
 /.idea/workspace.xml
-/.idea/
+.idea/
 /kiopcgenerator/.idea/
-/.idea/kiopcgenerator.iml
+.idea/kiopcgenerator.iml
 
