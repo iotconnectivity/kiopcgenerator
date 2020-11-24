@@ -1,7 +1,9 @@
 *.pyc
+.idea/
 build
 dist
 kiopcgenerator.egg-info
 .env
 .vscode
 .eggs
+venv
