@@ -1,2 +1,1 @@
 pycryptodome==3.9.9
-uuid==1.30
