@@ -1,2 +1,1 @@
-wheel==0.34.2
-pycrypto==2.6.1
+pycryptodome==3.9.9
