@@ -5,18 +5,17 @@
 #
 # Copyright (c) 2019 Podsystem Ltd
 # Authors : J. Félix Ontañón <felix.ontanon@podgroup.com>
+# Modify for python3: Mahfuzur Rahman Khan <mahfuzku11@gmail.com>
 
 """
-OPc and eKi generator. 
+OPc and eKi generator for python3 and upper version.
 More info: https://diameter-protocol.blogspot.com/2013/06/usage-of-opopc-and-transport-key.html
 """
 import uuid
 import binascii
 from Crypto.Cipher import AES
 
-
 # from card.utils import stringToByte, byteToString - Removed from package as not needed.
-
 
 # Based on OSMO-SIM-AUTH library: https://osmocom.org/projects/osmo-sim-auth
 class AuChss:
@@ -52,10 +51,8 @@ class AuChss:
         """xor two strings together"""
         return bytes([_a ^ _b for _a, _b in zip(s, t)])
 
-
 # Using 16bit zeroes as IV for the AES algo
 IV = binascii.unhexlify('00000000000000000000000000000000')
-
 
 def aes_128_cbc_encrypt(key, text):
     """
@@ -65,9 +62,7 @@ def aes_128_cbc_encrypt(key, text):
     textb = binascii.unhexlify(text)
     encryptor = AES.new(keyb, AES.MODE_CBC, IV=IV)
     ciphertext = encryptor.encrypt(textb)
-
-    return binascii.hexlify(ciphertext).upper()
-
+    return ciphertext.hex().upper()
 
 def gen_ki():
     """

@@ -263,15 +263,18 @@ dmypy.json
 # End of https://www.toptal.com/developers/gitignore/api/pycharm,python,linux
 
 *.pyc
+.idea/
 build
 dist
 kiopcgenerator.egg-info
 .env
 .vscode
 .eggs
+
 /.idea/workspace.xml
 .idea/
 /kiopcgenerator/.idea/
 .idea/kiopcgenerator.iml
 .idea
 
+venv
