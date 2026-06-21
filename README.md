@@ -41,6 +41,7 @@ Options:
   -o OP, --op=OP              32 char OP key
   -t TRANS, --transport=TRANS 32 char Transport key
   -k KI, --ki=KI              Optional 32 char Ki key (to avoid random generation)
+  -e EKI, --eki=EKI           32 char eKI key (to recover Ki)
 
 $ kiopcgen  -o D7DECB1F50404CC29ECBF989FE73AFC5 -t 2257CC6E9746434B89F346F0276CCAEC
 {'KI': '780E6AC95A2E43449C15BDCDD0450982',
@@ -51,6 +52,13 @@ $ kiopcgen -o D7DECB1F50404CC29ECBF989FE73AFC5 -t 2257CC6E9746434B89F346F0276CCA
 {'KI': '8978B79E7C104F678FA5C336509DB188',
  'OPC': '6F2E82855DEE7C893CB1F7A72FD08B57',
  'eKI': 'FBE8C170F6A5C6C257E5324719674818'}
+
+Or recover Ki from an encrypted eKi:
+
+$ kiopcgen -o D7DECB1F50404CC29ECBF989FE73AFC5 -t 2257CC6E9746434B89F346F0276CCAEC -e 4601138387FCF7D666ED24BBB3EE37B8
+{'KI': '780E6AC95A2E43449C15BDCDD0450982',
+ 'OPC': '2274B84B8043105A28AABBE53EF1D014',
+ 'eKI': '4601138387FCF7D666ED24BBB3EE37B8'}
 ```
 
 Or import the kiopcgenerator module to use in your scripts
@@ -71,6 +79,10 @@ print (kiopcgenerator.gen_opc(op, ki))
 print (kiopcgenerator.gen_eki(transport, ki))
 # 8FAC9FE22D306EA4CB86279B3473D8CB
 print (kiopcgenerator.gen_opc_eki(op, transport, ki))
+# {'KI': 'EBD77DF6CFF949448ACF82B8FE4E59E3', 'eKI': '8FAC9FE22D306EA4CB86279B3473D8CB', 'OPC': '33244F04A86408A53110D1FCAFD04288'}
+
+# Recover Ki from eKi
+print (kiopcgenerator.recover_ki(op, transport, eki))
 # {'KI': 'EBD77DF6CFF949448ACF82B8FE4E59E3', 'eKI': '8FAC9FE22D306EA4CB86279B3473D8CB', 'OPC': '33244F04A86408A53110D1FCAFD04288'}
 ```
 
