@@ -45,7 +45,7 @@ class AuChss:
         aes_crypt = AES.new(ki, mode=AES.MODE_CBC, IV=iv)
         data = op
         o_pc = self._xor_str(data, aes_crypt.encrypt(data))
-        return binascii.hexlify(o_pc)
+        return binascii.hexlify(o_pc).decode('utf-8')
 
     def _xor_str(self, s, t):
         """xor two strings together"""
