@@ -17,9 +17,14 @@ parser = OptionParser()
 parser.add_option("-o", "--op", dest="op", help="32 char OP key")
 parser.add_option("-t", "--transport", dest="trans", help="32 char Transport key")
 parser.add_option("-k", "--ki", dest="ki", help="Optional 32 char Ki key (to avoid random generation)")
+parser.add_option("-e", "--eki", dest="eki", help="32 char eKI key (to recover Ki)")
 (options, args) = parser.parse_args()
 
-if options.op and options.trans:
+if options.eki and options.trans and options.op:
+    result = kiopcgenerator.recover_ki(options.op, options.trans, options.eki)
+    pprint.pprint(result)
+    sys.exit(0)
+elif options.op and options.trans:
     if not options.ki:
         options.ki = kiopcgenerator.gen_ki()
 

@@ -79,11 +79,30 @@ def gen_opc(op, ki):
     return hss.calc_opc_hex(ki, op).upper()
 
 
+def aes_128_cbc_decrypt(key, ciphertext):
+    """
+    implements aes 128b decryption with cbc.
+    """
+    keyb = binascii.unhexlify(key)
+    ciphertextb = binascii.unhexlify(ciphertext)
+    decryptor = AES.new(keyb, AES.MODE_CBC, IV=IV)
+    plaintext = decryptor.decrypt(ciphertextb)
+    return plaintext.hex().upper()
+
+
 def gen_eki(transport, ki):
     """
     generates eKI based on ki and transport key
     """
     return aes_128_cbc_encrypt(transport, ki)
+
+
+def recover_ki(op, transport, eki):
+    """
+    recovers ki from eKI and generates opc using the transport key and op
+    """
+    ki = aes_128_cbc_decrypt(transport, eki)
+    return {"KI": ki, "OPC": gen_opc(op, ki), "eKI": eki}
 
 
 def gen_opc_eki(op, transport, ki):
