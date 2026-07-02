@@ -28,7 +28,7 @@ setup(
     license="GPLv3",
     setup_requies=['wheel'],
     install_requires=[
-        'pycrypto'
+        'pycryptodome'
     ],
     packages=['kiopcgenerator'],
     scripts=["kiopcgen"]
