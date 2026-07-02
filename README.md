@@ -104,7 +104,7 @@ $ pip install git+https://github.com/PodgroupConnectivity/kiopcgenerator#egg=kio
 From source code
 
 ```
-$ python setup.py install
+$ pip install .
 ```
 
 NOTE: You may want to install the dependencies in advance, if you haven't yet.
