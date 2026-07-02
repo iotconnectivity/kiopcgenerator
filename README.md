@@ -76,25 +76,6 @@ print (kiopcgenerator.gen_opc_eki(op, transport, ki))
 
 ## Installation
 
-Before install this you need to setup below dependency:
-
-```
-For Python 3.x
-$ sudo apt-get install python3-dev
-
-For Python 3.4
-$ sudo apt-get install python3.4-dev
-
-For Python 3.6.x
-$ sudo apt-get install python3.6-dev
-
-For Python 3.7
-$ sudo apt-get install python3.7-dev
-
-For Python 3.8
-$ sudo apt-get install python3.8-dev
-```
-
 Using PyPI repository
 
 ```
