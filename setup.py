@@ -26,7 +26,6 @@ setup(
     keywords=['python', 'sim', 'simcard', 'telecoms'],
     version="0.1.4",
     license="GPLv3",
-    setup_requies=['wheel'],
     install_requires=[
         'pycryptodome'
     ],
