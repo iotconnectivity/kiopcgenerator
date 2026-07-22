@@ -76,7 +76,8 @@ print (ki)
 # EBD77DF6CFF949448ACF82B8FE4E59E3
 print (kiopcgenerator.gen_opc(op, ki))
 # 33244F04A86408A53110D1FCAFD04288
-print (kiopcgenerator.gen_eki(transport, ki))
+eki = kiopcgenerator.gen_eki(transport, ki)
+print (eki)
 # 8FAC9FE22D306EA4CB86279B3473D8CB
 print (kiopcgenerator.gen_opc_eki(op, transport, ki))
 # {'KI': 'EBD77DF6CFF949448ACF82B8FE4E59E3', 'eKI': '8FAC9FE22D306EA4CB86279B3473D8CB', 'OPC': '33244F04A86408A53110D1FCAFD04288'}
