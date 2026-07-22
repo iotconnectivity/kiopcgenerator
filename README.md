@@ -12,6 +12,7 @@ Generate your Ki secret keys and grab the OP and Transport keys from your carrie
 - [Description](#description)
 - [Usage](#usage)
 - [Installation](#installation)
+- [Testing](#testing)
 - [Support](#support)
 - [Contributing](#contributing)
 
@@ -123,6 +124,14 @@ $ python setup.py install
 NOTE: You may want to install the dependencies in advance, if you haven't yet.
 ```
 $ pip install -r requirements.txt
+```
+
+## Testing
+
+Run the test suite with:
+
+```
+$ python -m unittest discover -s tests
 ```
 
 ## Support
