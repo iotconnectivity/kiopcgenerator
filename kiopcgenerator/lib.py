@@ -11,7 +11,7 @@
 OPc and eKi generator for python3 and upper version.
 More info: https://diameter-protocol.blogspot.com/2013/06/usage-of-opopc-and-transport-key.html
 """
-import uuid
+import secrets
 import binascii
 from Crypto.Cipher import AES
 
@@ -65,7 +65,7 @@ def gen_ki():
     """
     Clear ki random generator
     """
-    return str(uuid.uuid4()).replace('-', '').upper()
+    return secrets.token_hex(16).upper()
 
 
 def gen_opc(op, ki):

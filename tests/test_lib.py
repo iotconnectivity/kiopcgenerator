@@ -38,6 +38,15 @@ class GenOpcTest(unittest.TestCase):
             kiopcgenerator.gen_opc(OP, "AABB")
 
 
+class GenKiTest(unittest.TestCase):
+    def test_returns_32_uppercase_hex_chars(self):
+        ki = kiopcgenerator.gen_ki()
+        self.assertRegex(ki, r"^[0-9A-F]{32}$")
+
+    def test_values_are_unique(self):
+        self.assertNotEqual(kiopcgenerator.gen_ki(), kiopcgenerator.gen_ki())
+
+
 class GenEkiTest(unittest.TestCase):
     def test_known_vector(self):
         self.assertEqual(kiopcgenerator.gen_eki(TRANSPORT, KI), EKI)

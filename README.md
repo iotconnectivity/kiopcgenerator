@@ -33,7 +33,7 @@ Since a single OP value is shared by all of an operator's SIMs, a leak of OP wou
 This tool implements the standard MILENAGE OPc derivation, specified by 3GPP and published by ETSI:
 
 - **OPc derivation** (3GPP TS 35.205 / TS 35.206; ETSI TS 135 205 / 135 206): `OPc = OP XOR AES-128(Ki, OP)`, i.e. OP encrypted with AES-128 (Rijndael) under Ki, then XORed with OP. The implementation encrypts the single 16-byte block with AES-CBC and an all-zero IV, which is equivalent to AES-ECB for one block. No custom rotations or constants are involved: the MILENAGE rotations (r1..r5) and constants (c1..c5) only apply to the f1–f5* authentication functions, not to the OPc derivation. The output is verified against MILENAGE Test Set 1 from 3GPP TS 35.207 / TS 35.208 (ETSI TS 135 207 / 135 208) in the test suite.
-- **Ki generation**: a randomly generated 128-bit value (from a version-4 UUID). Ki plays the role of the subscriber key K in the 3GPP AKA framework (3GPP TS 33.102 for 3G, TS 33.401 for LTE, TS 33.501 for 5G).
+- **Ki generation**: a randomly generated 128-bit value, drawn from the operating system's CSPRNG via Python's `secrets` module. Ki plays the role of the subscriber key K in the 3GPP AKA framework (3GPP TS 33.102 for 3G, TS 33.401 for LTE, TS 33.501 for 5G).
 - **eKi**: AES-128-CBC encryption of Ki under the Transport key, with an all-zero IV. Recovering Ki from eKi is the corresponding decryption. Encrypting Ki under a per-vendor transport key for exchange follows the industry practice described in GSMA FS.28 (Security Guidelines for Exchange of UICC Credentials), which lists AES-128 among the accepted transport-key algorithms.
 
 MILENAGE is one of the two 3GPP-standardized algorithm sets for AKA — the other being TUAK (3GPP TS 35.231), based on Keccak. This tool covers MILENAGE only.
@@ -74,7 +74,6 @@ Or import the kiopcgenerator module to use in your scripts
 
 ```python
 import pprint
-import uuid
 import kiopcgenerator
  
 op = "D7DECB1F50404CC29ECBF989FE73AFC5"
