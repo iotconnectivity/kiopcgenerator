@@ -10,6 +10,7 @@ Generate your Ki secret keys and grab the OP and Transport keys from your carrie
 ## Table of Contents
 
 - [Description](#description)
+- [Algorithm](#algorithm)
 - [Usage](#usage)
 - [Installation](#installation)
 - [Testing](#testing)
@@ -29,6 +30,19 @@ OPc -[128 Bits]
 
 Transport Key (64-Bits) : This key is used as a Lock to KEY (secret key) and OPc. When authentication credentials are to be provisioned at AuC or HLR/HSS; then they are provisioned in encrypted form rather then plain and this encryption is done by Transport Key. 
 When authentication credentials are to be used in Authentication Generation then; all fields are decrypted  to plain key by transport key; and now plain key is used f1,f2,f3,f4,f5 algorithms.
+
+## Algorithm
+
+- **OPc derivation**: the standard MILENAGE OPc computation defined in 3GPP TS 35.205/35.206:
+  `OPc = OP XOR AES-128(Ki, OP)`, i.e. OP encrypted with AES-128 (Rijndael) under Ki, then XORed
+  with OP. The implementation encrypts the single 16-byte block with AES-CBC and an all-zero IV,
+  which is equivalent to AES-ECB for one block. No custom rotations or constants are involved:
+  the MILENAGE rotations (r1..r5) and constants (c1..c5) only apply to the f1-f5* authentication
+  functions, not to the OPc derivation. The output is verified against MILENAGE Test Set 1 from
+  3GPP TS 35.207/35.208 in the test suite.
+- **Ki generation**: a random 128-bit value (not derived from OP).
+- **eKi**: AES-128-CBC encryption of Ki under the Transport key, with an all-zero IV. Recovering
+  Ki from eKi is the corresponding decryption.
 
 ## Usage
 
