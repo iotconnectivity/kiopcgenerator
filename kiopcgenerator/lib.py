@@ -30,14 +30,11 @@ class AuChss:
         self.op = self.op_bin.decode('utf-8')
         self.users = []
 
-    def calc_opc_hex(self, k_hex, op_hex=None):
+    def calc_opc_hex(self, k_hex, op_hex):
         iv = binascii.unhexlify(16 * '00')
         ki = binascii.unhexlify(k_hex)
+        op = binascii.unhexlify(op_hex)
 
-        if not op_hex == None:
-            op = binascii.unhexlify(op_hex)
-        else:
-            op = binascii.unhexlify(self.op)
         if self._debug:
             print(f'[DBG]calc_opc_hex: op({len(op)}) KI({len(ki)}) IV({len(iv)})')
             print(f'[DBG]calc_opc_hex: OP, {op} KI, {ki} IV, {iv}')
