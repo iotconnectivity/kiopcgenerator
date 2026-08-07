@@ -104,10 +104,18 @@ print (kiopcgenerator.recover_ki(op, transport, eki))
 
 ## Installation
 
-Using PyPI repository
+Recent Linux distributions mark the system Python as externally managed ([PEP 668](https://peps.python.org/pep-0668/)), so `sudo pip3 install` fails with an `externally-managed-environment` error. Install with [pipx](https://pipx.pypa.io/) instead, which manages a virtual environment for you (recommended for the `kiopcgen` command-line tool):
 
 ```
-$ pip install git+https://github.com/PodgroupConnectivity/kiopcgenerator#egg=kiopcgenerator
+$ pipx install git+https://github.com/iotconnectivity/kiopcgenerator#egg=kiopcgenerator
+```
+
+Or inside a virtual environment (recommended to use the library from your own code):
+
+```
+$ python3 -m venv .venv
+$ source .venv/bin/activate
+$ pip install git+https://github.com/iotconnectivity/kiopcgenerator#egg=kiopcgenerator
 ```
 
 From source code
@@ -131,7 +139,7 @@ $ python -m unittest discover -s tests
 
 ## Support
 
-Please [open an issue](https://github.com/PodgroupConnectivity/kiopcgenerator/issues/new) for support.
+Please [open an issue](https://github.com/iotconnectivity/kiopcgenerator/issues/new) for support.
 
 ## Contributing
 
