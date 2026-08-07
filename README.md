@@ -1,11 +1,11 @@
 # Ki/OPc Generator
 
-Ki/OPc USIM card keys geneartion. This script will produce Ki/eKi/OPc triplets given the Op and Transport keys.
+Ki/OPc USIM card key generation. This tool produces Ki/eKi/OPc triplets given the OP and Transport keys, and can recover Ki back from an eKi.
 
-OPc was the ultimate key that is generated from OP and Ki (secret Key). 
+OPc is the subscriber-specific key derived from OP and Ki (the secret subscriber key).
 Generate your Ki secret keys and grab the OP and Transport keys from your carrier.
 
-**NOTE**: This package has been tested with Python3.6.9 and Python3.8
+**NOTE**: Requires Python 3.6 or later. The test suite currently runs on Python 3.12.
 
 ## Table of Contents
 
@@ -14,35 +14,29 @@ Generate your Ki secret keys and grab the OP and Transport keys from your carrie
 - [Usage](#usage)
 - [Installation](#installation)
 - [Testing](#testing)
+- [References](#references)
 - [Support](#support)
 - [Contributing](#contributing)
 
 ## Description
 
-OP: Operator Code : It is allotted to an operator and used in key generation algorithms of 3G and 4G. It is not shown as a part of input, because it is not specific to a user/Subscriber/SIM. It remains fix for all Subscriber/SIM of an operator that is why it is not used as an input to key generation algorithms. This OP (a 128-bits Operator Variant Algorithm Configuration Field )value is passed to an encryption algorithm ("RijndaelEncrypt") to generate OPc and OPc is used in all f1,f2,f3,f4,f5 functions internally to generate various keys.
+**OP (Operator Variant Algorithm Configuration Field)**: a 128-bit value allotted to an operator and used in the key generation algorithms of 3G/4G/5G networks. It is not subscriber-specific: it remains the same for all SIMs of an operator. The OP value is passed, together with the subscriber key Ki, to an AES-based (Rijndael) derivation to produce OPc, and it is OPc that the MILENAGE f1–f5 functions use internally to generate authentication vectors.
 
-As OP value is single, same to all subscriber/SIM. If someone knows it then there can be a possibility of spoofing of all SIM, because all SIMs are using the same value of OP. So Operator come up with the solution that they shall provision OPc rather than OP in AuC or HLR/HSS. When f1,f2....f5 get the OPc they doesn't generate it from OP; received OPC is used in vector generation. There is no reverse engineering for OP from OPC.
+Since a single OP value is shared by all of an operator's SIMs, a leak of OP would weaken every SIM at once. For that reason operators provision the derived, subscriber-specific OPc — rather than OP — in the AuC or HLR/HSS and on the card. When the f1–f5 functions receive OPc they use it directly, without ever needing OP, and OPc cannot feasibly be reversed to obtain OP. If an OPc is stolen, only that single SIM is compromised.
 
-Basically OPc was the ultimate key that is generated from OP and KEy (secret Key) by using  ("RijndaelEncrypt") algorithm which is specific to SIM. if some one able to theft OPc then it can spoof only single SIM not all the SIMs.
+**Ki (subscriber authentication key K)**: the 128-bit secret key shared between the USIM and the operator's AuC/HSS, as defined by the 3GPP AKA security framework. It is unique per SIM.
 
-OPc=Encypt-Algo(OP,Key)
-OPc -[128 Bits]
-
-Transport Key (64-Bits) : This key is used as a Lock to KEY (secret key) and OPc. When authentication credentials are to be provisioned at AuC or HLR/HSS; then they are provisioned in encrypted form rather then plain and this encryption is done by Transport Key. 
-When authentication credentials are to be used in Authentication Generation then; all fields are decrypted  to plain key by transport key; and now plain key is used f1,f2,f3,f4,f5 algorithms.
+**Transport key**: a 128-bit key (32 hex chars in this tool) used to protect credentials in transit. When authentication credentials are exchanged between SIM vendors and operators or provisioned into the AuC or HLR/HSS, Ki is transported in encrypted form (eKi) rather than in the clear, and only decrypted back to the plain Ki where it is actually used.
 
 ## Algorithm
 
-- **OPc derivation**: the standard MILENAGE OPc computation defined in 3GPP TS 35.205/35.206:
-  `OPc = OP XOR AES-128(Ki, OP)`, i.e. OP encrypted with AES-128 (Rijndael) under Ki, then XORed
-  with OP. The implementation encrypts the single 16-byte block with AES-CBC and an all-zero IV,
-  which is equivalent to AES-ECB for one block. No custom rotations or constants are involved:
-  the MILENAGE rotations (r1..r5) and constants (c1..c5) only apply to the f1-f5* authentication
-  functions, not to the OPc derivation. The output is verified against MILENAGE Test Set 1 from
-  3GPP TS 35.207/35.208 in the test suite.
-- **Ki generation**: a random 128-bit value (not derived from OP).
-- **eKi**: AES-128-CBC encryption of Ki under the Transport key, with an all-zero IV. Recovering
-  Ki from eKi is the corresponding decryption.
+This tool implements the standard MILENAGE OPc derivation, specified by 3GPP and published by ETSI:
+
+- **OPc derivation** (3GPP TS 35.205 / TS 35.206; ETSI TS 135 205 / 135 206): `OPc = OP XOR AES-128(Ki, OP)`, i.e. OP encrypted with AES-128 (Rijndael) under Ki, then XORed with OP. The implementation encrypts the single 16-byte block with AES-CBC and an all-zero IV, which is equivalent to AES-ECB for one block. No custom rotations or constants are involved: the MILENAGE rotations (r1..r5) and constants (c1..c5) only apply to the f1–f5* authentication functions, not to the OPc derivation. The output is verified against MILENAGE Test Set 1 from 3GPP TS 35.207 / TS 35.208 (ETSI TS 135 207 / 135 208) in the test suite.
+- **Ki generation**: a randomly generated 128-bit value (from a version-4 UUID). Ki plays the role of the subscriber key K in the 3GPP AKA framework (3GPP TS 33.102 for 3G, TS 33.401 for LTE, TS 33.501 for 5G).
+- **eKi**: AES-128-CBC encryption of Ki under the Transport key, with an all-zero IV. Recovering Ki from eKi is the corresponding decryption. Encrypting Ki under a per-vendor transport key for exchange follows the industry practice described in GSMA FS.28 (Security Guidelines for Exchange of UICC Credentials), which lists AES-128 among the accepted transport-key algorithms.
+
+MILENAGE is one of the two 3GPP-standardized algorithm sets for AKA — the other being TUAK (3GPP TS 35.231), based on Keccak. This tool covers MILENAGE only.
 
 ## Usage
 
@@ -136,6 +130,15 @@ Run the test suite with:
 ```
 $ python -m unittest discover -s tests
 ```
+
+## References
+
+- [3GPP TS 35.205 (ETSI TS 135 205)](https://www.etsi.org/deliver/etsi_ts/135200_135299/135205/) — MILENAGE algorithm set: General
+- [3GPP TS 35.206 (ETSI TS 135 206)](https://www.etsi.org/deliver/etsi_ts/135200_135299/135206/) — MILENAGE algorithm specification (defines the OPc derivation)
+- [3GPP TS 35.207 (ETSI TS 135 207)](https://www.etsi.org/deliver/etsi_ts/135200_135299/135207/) — MILENAGE implementers' test data
+- [3GPP TS 35.208 (ETSI TS 135 208)](https://www.etsi.org/deliver/etsi_ts/135200_135299/135208/) — MILENAGE design conformance test data
+- [3GPP TS 33.102 (ETSI TS 133 102)](https://www.etsi.org/deliver/etsi_ts/133100_133199/133102/) — 3G security architecture (defines the subscriber key K and AKA)
+- [GSMA FS.28](https://www.gsma.com/solutions-and-impact/technologies/security/gsma_resources/fs-28-security-guidelines-for-exchange-of-uicc-credentials/) — Security Guidelines for Exchange of UICC Credentials (transport-key protection of Ki)
 
 ## Support
 
